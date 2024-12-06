@@ -174,7 +174,7 @@ const WeatherApp: React.FC = () => {
       const locationName = currentWeather.name || '알 수 없는 위치';
       setLocation(locationName);
 
-      const weatherData: WeatherData = {
+      return {
         temp: Math.round(currentWeather.main.temp),
         feels_like: Math.round(currentWeather.main.feels_like),
         humidity: currentWeather.main.humidity,
@@ -200,8 +200,6 @@ const WeatherApp: React.FC = () => {
           pm_icon: day.weather[0].icon
         }))
       };
-
-      return weatherData;
     } catch (error) {
       console.error('날씨 데이터 가져오기 실패:', error);
       return null;
@@ -273,7 +271,7 @@ const WeatherApp: React.FC = () => {
       };
 
       getRecommendation();
-    }, [weatherData]);
+    }, []); // 의존성 배열에서 weatherData 제거
 
     if (!recommendation) return null;
 
@@ -345,7 +343,7 @@ const WeatherApp: React.FC = () => {
                 {getWeatherIcon(tomorrow.am_icon)}
               </div>
               <div className="flex flex-col items-center">
-              <span className="text-sm">오후</span>
+                <span className="text-sm">오후</span>
                 {getWeatherIcon(tomorrow.pm_icon)}
               </div>
             </div>
@@ -461,7 +459,7 @@ const WeatherApp: React.FC = () => {
       style={{
         backgroundImage: `url(${getBackgroundImage(weatherData.icon)})`,
         backgroundColor: 'rgba(0,0,0,0.3)',
-        backgroundBlend: 'overlay'
+        backgroundBlendMode: 'overlay'  // backgroundBlend를 backgroundBlendMode로 수정
       }}
     >
       <div className="max-w-md mx-auto">
